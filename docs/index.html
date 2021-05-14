@@ -144,9 +144,6 @@ $(function() {
         //重ね合わせ
         contextVideo.drawImage(canvasPaint,0,0)
 
-        var stream = canvasVideo.captureStream(25);
-        video.srcObject = stream;
-
         //次フレームの描画時に処理を呼び出す
         requestAnimationFrame(draw);
     };
