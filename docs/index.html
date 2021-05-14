@@ -10,6 +10,7 @@
     <!-- Video area -->
     <div class="pure-u-2-3" id="video-container">
         <div class="canvas-wrapper" id="their-canvas">
+            <video hidden id="their-video" autoplay></video>
             <canvas id="synthetic-canvas1">お使いのブラウザはHTML5のCanvas要素に対応していません。</canvas>
             <canvas id="synthetic-canvas2">お使いのブラウザはHTML5のCanvas要素に対応していません。</canvas>
         </div>
@@ -57,18 +58,12 @@ $(function() {
     var startY;
     var flag = false;
     var video = document.getElementById("their-video");
-    var displayCanvas = document.getElementById("synthetic-canvas1");
-    if (displayCanvas.getContext) {
-        var displayContext = displayCanvas.getContext('2d');
-    }
+    var canvasVideo = document.getElementById("synthetic-canvas1");
     var canvasPaint = document.getElementById("synthetic-canvas2");
-    var canvasVideo = document.createElement("canvas");
 
     // Canvasのサイズを揃える
-    canvasVideo.width = displayCanvas.width;
-    canvasVideo.height = displayCanvas.height;
-    canvasPaint.width = displayCanvas.width;
-    canvasPaint.height = displayCanvas.height;
+    canvasPaint.width = canvasVideo.width;
+    canvasPaint.height = canvasVideo.height;
 
     var contextPaint = canvasPaint.getContext('2d');
     var contextVideo = canvasVideo.getContext('2d');
@@ -78,8 +73,8 @@ $(function() {
     
     $('#their-canvas').mousedown(function(e) {
         flag = true;
-        var raitoX = displayCanvas.width/displayCanvas.clientWidth;
-        var raitoY = displayCanvas.height/displayCanvas.clientHeight;
+        var raitoX = canvasVideo.width/canvasVideo.clientWidth;
+        var raitoY = canvasVideo.height/canvasVideo.clientHeight;
 
         startX = (e.pageX - $('#their-canvas').offset().left) * raitoX;
         startY = (e.pageY - $('#their-canvas').offset().top) * raitoY;
@@ -89,8 +84,8 @@ $(function() {
  
     $('#their-canvas').mousemove(function(e) {
         if (flag) {
-            var raitoX = displayCanvas.width/displayCanvas.clientWidth;
-            var raitoY = displayCanvas.height/displayCanvas.clientHeight;
+            var raitoX = canvasVideo.width/canvasVideo.clientWidth;
+            var raitoY = canvasVideo.height/canvasVideo.clientHeight;
 
             var endX = (e.pageX - $('#their-canvas').offset().left) * raitoX;
             var endY = (e.pageY - $('#their-canvas').offset().top) * raitoY;
@@ -122,13 +117,13 @@ $(function() {
     $('#clear').click(function(e) {
         e.preventDefault();
         contextPaint.clearRect(0, 0, $('#their-canvas').width(), $('#their-canvas').height());
-        displayContext.clearRect(0, 0, $('#their-canvas').width(), $('#their-canvas').height());
+        contextVideo.clearRect(0, 0, $('#their-canvas').width(), $('#their-canvas').height());
         // 描画
         draw();
     });
  
     $('#save').click(function() {
-        var d = displayCanvas.toDataURL('image/png');
+        var d = canvasVideo.toDataURL('image/png');
         d = d.replace('image/png', 'image/octet-stream');
         window.open(d, 'save');
     });
@@ -147,8 +142,7 @@ $(function() {
         //displayContext.drawImage(displayCanvas, 0, 0, displayCanvas.width, displayCanvas.height);
 
         //重ね合わせ
-        displayContext.drawImage(canvasVideo,0,0)
-        displayContext.drawImage(canvasPaint,0,0)
+        contextVideo.drawImage(canvasPaint,0,0)
 
         //次フレームの描画時に処理を呼び出す
         requestAnimationFrame(draw);
