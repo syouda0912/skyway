@@ -144,16 +144,11 @@ $(function() {
         //重ね合わせ
         contextVideo.drawImage(canvasPaint,0,0)
 
+        var stream = canvasVideo.captureStream(25);
+        video.srcObject = stream;
+
         //次フレームの描画時に処理を呼び出す
         requestAnimationFrame(draw);
     };
-
-    function getMousePosition(canvas, evt) {
-        var rect = canvas.getBoundingClientRect();
-        return {
-          x: evt.clientX - rect.left,
-          y: evt.clientY - rect.top
-        };
-      }
 });
 </script>
