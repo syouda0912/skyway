@@ -10,7 +10,7 @@
     <!-- Video area -->
     <div class="pure-u-2-3" id="video-container">
         <div class="canvas-wrapper" id="their-canvas">
-            <video hidden id="their-video" autoplay></video>
+            <video hidden id="their-video" autoplay muted=true></video>
             <canvas id="synthetic-canvas1">お使いのブラウザはHTML5のCanvas要素に対応していません。</canvas>
             <canvas id="synthetic-canvas2">お使いのブラウザはHTML5のCanvas要素に対応していません。</canvas>
         </div>
@@ -26,15 +26,15 @@
             <input type="button" id="save" value="保存" />
             <input type="button" id="clear" value="消去" />
             </div>
-        <video id="my-video" muted="true" autoplay></video>
+        <video id="my-video" muted="true" autoplay muted=true></video>
     </div>
 
     <!-- Steps -->
     <div class="pure-u-1-3">
-        <h2>SkyWay Video Chat(お絵描き機能追加)</h2>
+        <h2>SkyWay Video Chat(ペイント機能追加)</h2>
 
         <p>Your id: <span id="my-id">...</span></p>
-        <p>Share this id with others so they can call you.</p>
+        <p>本IDを連絡相手に通知することで、連絡相手と電話できるようにします。</p>
         <h3>Make a call</h3>
         <form id="make-call" class="pure-form">
             <input type="text" placeholder="Call user id..." id="callto-id">
