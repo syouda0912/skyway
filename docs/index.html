@@ -10,7 +10,7 @@
     <!-- Video area -->
     <div class="pure-u-2-3" id="video-container">
         <div class="canvas-wrapper" id="their-canvas">
-            <video hidden id="their-video" autoplay muted=true style="position: -webkit-sticky;"></video>
+            <video hidden id="their-video" autoplay muted=true playsinline=true></video>
             <canvas id="synthetic-canvas1">お使いのブラウザはHTML5のCanvas要素に対応していません。</canvas>
             <canvas id="synthetic-canvas2">お使いのブラウザはHTML5のCanvas要素に対応していません。</canvas>
         </div>
@@ -26,7 +26,7 @@
             <input type="button" id="save" value="保存" />
             <input type="button" id="clear" value="消去" />
             </div>
-        <video id="my-video" muted="true" autoplay muted=true style="position: -webkit-sticky;"></video>
+        <video id="my-video" muted="true" autoplay muted=true playsinline=true></video>
     </div>
 
     <!-- Steps -->
@@ -58,11 +58,6 @@ $(function() {
     var startY;
     var flag = false;
     var video = document.getElementById("their-video");
-    video.setAttribute("playsinline", true);
-    video.play();
-    var myVideo = document.getElementById("my-video");
-    myVideo.setAttribute("playsinline", true);
-    myvideo.play();
     var canvasVideo = document.getElementById("synthetic-canvas1");
     var canvasPaint = document.getElementById("synthetic-canvas2");
 
