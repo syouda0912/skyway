@@ -47,9 +47,7 @@ $('#make-call').submit(function(e){
     var paintStream = canvasVideo.captureStream(25);
     localStream.addTrack(paintStream.getVideoTracks()[0]);
 
-    const call = peer.call($('#callto-id').val(), localStream,{
-        videoCodec: 'H264'
-    });
+    const call = peer.call($('#callto-id').val(), localStream);
     setupCallEventHandlers(call);
 });
 
@@ -58,9 +56,7 @@ $('#end-call').click(function(){
 });
 
 peer.on('call', function(call){
-    call.answer(localStream,{
-        videoCodec: 'H264'
-    });
+    call.answer(localStream);
     setupCallEventHandlers(call);
 });
 
