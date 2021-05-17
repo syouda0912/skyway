@@ -58,6 +58,9 @@ $(function() {
     var startY;
     var flag = false;
     var video = document.getElementById("their-video");
+    video.setAttribute("playsinline", true);
+    var myVideo = document.getElementById("my-video");
+    myVideo.setAttribute("playsinline", true);
     var canvasVideo = document.getElementById("synthetic-canvas1");
     var canvasPaint = document.getElementById("synthetic-canvas2");
 
