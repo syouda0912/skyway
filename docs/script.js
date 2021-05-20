@@ -202,9 +202,7 @@ $(function() {
         contextVideo.clearRect(0, 0, canvasVideo.width, canvasVideo.height);
 
         //video2の加工
-        if (video != null){
-            contextVideo.drawImage(video, 0, 0, canvasVideo.width, canvasVideo.height);
-        }
+        contextVideo.drawImage(video, 0, 0, canvasVideo.width, canvasVideo.height);
 
         //描画の加工
         //displayContext.drawImage(displayCanvas, 0, 0, displayCanvas.width, displayCanvas.height);
