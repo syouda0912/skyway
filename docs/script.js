@@ -199,7 +199,7 @@ $(function() {
     function draw(){
         // ビデオの内容をクリア
         //displayContext.clearRect(0, 0, displayCanvas.width, displayCanvas.height);
-        contextVideo.clearRect(0, 0, canvasVideo.width, canvasVideo.height);
+        //contextVideo.clearRect(0, 0, canvasVideo.width, canvasVideo.height);
 
         //video2の加工
         contextVideo.drawImage(video, 0, 0, canvasVideo.width, canvasVideo.height);
