@@ -92,6 +92,9 @@ function addVideo(call,stream){
         $('#my-video').get(0).srcObject = _peerPaint;
         $('#their-video').get(0).srcObject = _peerVideo;
 
+        $('#my-audio').get(0).srcObject = _peerPaint;
+        $('#their-audio').get(0).srcObject = _peerVideo;
+
         var paintgroup = document.getElementById("paint-group1");
         paintgroup.style.visibility = "hidden";
 
@@ -213,3 +216,4 @@ $(function() {
         requestAnimationFrame(draw);
     };
 });
+
