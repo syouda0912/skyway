@@ -9,6 +9,7 @@ navigator.mediaDevices.getUserMedia({video: true, audio: true})
         // Success
         $('#my-video').get(0).srcObject = stream;
         localStream = stream;
+
     }).catch(function (error) {
     // Error
     console.error('mediaDevice.getUserMedia() error:', error);
@@ -90,6 +91,10 @@ function addVideo(call,stream){
 
         $('#my-video').get(0).srcObject = _peerPaint;
         $('#their-video').get(0).srcObject = _peerVideo;
+
+        var paintgroup = document.getElementById("paint-group1");
+        paintgroup.style.visibility = "hidden";
+
     }else{
         $('#their-video').get(0).srcObject = stream;
     }
@@ -128,7 +133,11 @@ $(function() {
     draw();
     
     $('#their-canvas').mousedown(function(e) {
-        flag = true;
+
+        var paintgroup = document.getElementById("paint-group1");
+        if(paintgroup.style.visibility != "hidden"){
+            flag = true;
+        }
         var raitoX = ( $('#their-canvas').offset().right - $('#their-canvas').offset().left)/canvasVideo.clientWidth;
         var raitoY = canvasVideo.height/canvasVideo.clientHeight;
 
@@ -204,4 +213,3 @@ $(function() {
         requestAnimationFrame(draw);
     };
 });
-
