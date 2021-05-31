@@ -92,7 +92,7 @@ function addVideo(call,stream){
         $('#my-video').get(0).srcObject = _peerPaint;
         $('#their-video').get(0).srcObject = _peerVideo;
 
-        $('#my-audio').get(0).srcObject = _peerPaint;
+        $('#my-audio').get(0).srcObject = _peerVideo;
         $('#their-audio').get(0).srcObject = _peerVideo;
 
         var paintgroup = document.getElementById("paint-group1");
@@ -199,7 +199,7 @@ $(function() {
     function draw(){
         // ビデオの内容をクリア
         //displayContext.clearRect(0, 0, displayCanvas.width, displayCanvas.height);
-        //contextVideo.clearRect(0, 0, canvasVideo.width, canvasVideo.height);
+        contextVideo.clearRect(0, 0, canvasVideo.width, canvasVideo.height);
 
         //video2の加工
         contextVideo.drawImage(video, 0, 0, canvasVideo.width, canvasVideo.height);
