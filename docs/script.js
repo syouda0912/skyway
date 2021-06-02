@@ -69,17 +69,16 @@ function setupCallEventHandlers(call){
     existingCall = call;
 
     call.on('stream', function(stream){
-        addVideo(call,stream);
+        addVideo(stream);
         setupEndCallUI();
         $('#their-id').text(call.remoteId);
     });
     call.on('close', function(){
-        removeVideo(call.remoteId);
         setupMakeCallUI();
     });
 }
 
-function addVideo(call,stream){
+function addVideo(stream){
     var _tracklengs = stream.getVideoTracks().length;
     if( _tracklengs == 2){
         var _peerVideo = new webkitMediaStream();
@@ -95,16 +94,14 @@ function addVideo(call,stream){
         $('#my-audio').get(0).srcObject = _peerVideo;
         $('#their-audio').get(0).srcObject = _peerVideo;
 
+        // 受け側はペイント関連を非表示にする。
         var paintgroup = document.getElementById("paint-group1");
         paintgroup.style.visibility = "hidden";
-
+        var btngroup = document.getElementById("button-group1");
+        btngroup.style.visibility = "hidden";
     }else{
         $('#their-video').get(0).srcObject = stream;
     }
-}
-
-function removeVideo(peerId){
-    $('#'+peerId).remove();
 }
 
 function setupMakeCallUI(){
@@ -141,7 +138,7 @@ $(function() {
         if(paintgroup.style.visibility != "hidden"){
             flag = true;
         }
-        var raitoX = ( $('#their-canvas').offset().right - $('#their-canvas').offset().left)/canvasVideo.clientWidth;
+        var raitoX =  canvasVideo.width/canvasVideo.clientWidth;
         var raitoY = canvasVideo.height/canvasVideo.clientHeight;
 
         startX = (e.pageX - $('#their-canvas').offset().left) * raitoX;
