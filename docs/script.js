@@ -45,7 +45,7 @@ $('#make-call').submit(function(e){
 
     // キャンパス情報追加
     var canvasVideo = document.getElementById("synthetic-canvas1");
-    var paintStream = canvasVideo.captureStream(25);
+    var paintStream = canvasVideo.captureStream(30);
     localStream.addTrack(paintStream.getVideoTracks()[0]);
 
     const call = peer.call($('#callto-id').val(), localStream);
@@ -123,11 +123,17 @@ $(function() {
     var canvasPaint = document.getElementById("synthetic-canvas2");
 
     // Canvasのサイズを揃える
-    canvasPaint.width = canvasVideo.width;
-    canvasPaint.height = canvasVideo.height;
+//    canvasVideo.width = canvasVideo.width * 2
+//    canvasVideo.height = canvasVideo.height * 2
+//    canvasPaint.width = canvasVideo.width;
+//    canvasPaint.height = canvasVideo.height;
+setResolution(canvasVideo);
+setResolution(canvasPaint);
 
     var contextPaint = canvasPaint.getContext('2d');
     var contextVideo = canvasVideo.getContext('2d');
+
+
 
     //描画処理
     draw();
@@ -181,8 +187,8 @@ $(function() {
  
     $('#clear').click(function(e) {
         e.preventDefault();
-        contextPaint.clearRect(0, 0, $('#their-canvas').width(), $('#their-canvas').height());
-        contextVideo.clearRect(0, 0, $('#their-canvas').width(), $('#their-canvas').height());
+        contextPaint.clearRect(0, 0, canvasPaint.width, canvasPaint.height);
+        contextVideo.clearRect(0, 0, canvasVideo.width, canvasVideo.height);
         // 描画
         draw();
     });
@@ -192,6 +198,12 @@ $(function() {
         d = d.replace('image/png', 'image/octet-stream');
         window.open(d, 'save');
     });
+
+    function setResolution(c) {
+        c.width = 720;
+        c.height = 480;
+
+    }
 
     function draw(){
         // ビデオの内容をクリア
