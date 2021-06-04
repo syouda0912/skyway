@@ -62,7 +62,7 @@ peer.on('call', function(call){
     // キャンパス情報追加
     var canvasVideo = document.getElementById("synthetic-canvas1");
     var paintStream = canvasVideo.captureStream(30);
-    // localStream.addTrack(paintStream.getVideoTracks()[0]);
+    localStream.addTrack(paintStream.getVideoTracks()[0]);
 
     // ペイント関連を非表示にする。
     var paintgroup = document.getElementsByClassName("paint-wrapper");
@@ -70,7 +70,7 @@ peer.on('call', function(call){
          paintgroup[i].style.display = "block";
     }
 
-    call.answer(paintStream);
+    call.answer(localStream);
     setupCallEventHandlers(call);
 });
 
