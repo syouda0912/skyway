@@ -38,15 +38,17 @@ peer.on('disconnected', function(){
 $('#make-call').submit(function(e){
     e.preventDefault();
 
-    if(localStream.getVideoTracks().length == 2){
-        // 既に２つのトラックが含まれる場合は、2つめのトラック（ScreenShare）を削除
-        localStream.removeTrack(localStream.getVideoTracks()[1]);
+    if(localStream.getVideoTracks().length > 1){
+        // 既に２つ以上トラックが含まれる場合は、2つ目以降のトラックを削除
+        for(let i = 1; i < localStream.getVideoTracks().length; i++){
+            localStream.removeTrack(localStream.getVideoTracks()[i]);
+        }
     }
 
     // キャンパス情報追加
-    var canvasVideo = document.getElementById("synthetic-canvas1");
-    var paintStream = canvasVideo.captureStream(30);
-    localStream.addTrack(paintStream.getVideoTracks()[0]);
+    // var canvasVideo = document.getElementById("synthetic-canvas1");
+    // var paintStream = canvasVideo.captureStream(30);
+    // localStream.addTrack(paintStream.getVideoTracks()[0]);
 
     const call = peer.call($('#callto-id').val(), localStream);
     setupCallEventHandlers(call);
@@ -57,7 +59,18 @@ $('#end-call').click(function(){
 });
 
 peer.on('call', function(call){
-    call.answer(localStream);
+    // キャンパス情報追加
+    var canvasVideo = document.getElementById("synthetic-canvas1");
+    var paintStream = canvasVideo.captureStream(30);
+    // localStream.addTrack(paintStream.getVideoTracks()[0]);
+
+    // ペイント関連を非表示にする。
+    var paintgroup = document.getElementsByClassName("paint-wrapper");
+    for(let i = 0; i < paintgroup.length; i++){
+         paintgroup[i].style.display = "block";
+    }
+
+    call.answer(paintStream);
     setupCallEventHandlers(call);
 });
 
@@ -94,11 +107,6 @@ function addVideo(stream){
         $('#my-audio').get(0).srcObject = _peerVideo;
         $('#their-audio').get(0).srcObject = _peerVideo;
 
-        // 受け側はペイント関連を非表示にする。
-        var paintgroup = document.getElementById("paint-group1");
-        paintgroup.style.visibility = "hidden";
-        var btngroup = document.getElementById("button-group1");
-        btngroup.style.visibility = "hidden";
     }else{
         $('#their-video').get(0).srcObject = stream;
     }
@@ -127,13 +135,17 @@ $(function() {
 //    canvasVideo.height = canvasVideo.height * 2
 //    canvasPaint.width = canvasVideo.width;
 //    canvasPaint.height = canvasVideo.height;
-setResolution(canvasVideo);
-setResolution(canvasPaint);
+    setResolution(canvasVideo);
+    setResolution(canvasPaint);
 
     var contextPaint = canvasPaint.getContext('2d');
     var contextVideo = canvasVideo.getContext('2d');
 
-
+    // ペイント関連を非表示にする。
+    var paintgroup = document.getElementsByClassName("paint-wrapper");
+    for(let i = 0; i < paintgroup.length; i++){
+         paintgroup[i].style.display = "none";
+    }
 
     //描画処理
     draw();
