@@ -25,10 +25,6 @@
                 <li style="background-color:#fff"></li>
             </ul>
         </div>
-        <div id="button-group1">
-            <input type="button" id="save" value="保存" />
-            <input type="button" id="clear" value="消去" />
-        </div> 
         <video id="my-video" muted playsinline autoplay></video>
         <audio id="my-audio" autoplay></audio>
     </div>
@@ -39,15 +35,18 @@
 
         <p>Your id: <span id="my-id">...</span></p>
         <p>本IDを連絡相手に通知することで、<br>連絡相手と通話できます。</p>
-        <h3>Make a call</h3>
+        <h3>呼び出し</h3>
         <form id="make-call" class="pure-form">
             <input type="text" placeholder="Call user id..." id="callto-id">
-            <button href="#" class="pure-button pure-button-success" type="submit">Call</button>
+            <button href="#" class="qten-button" type="submit">Call</button>
         </form>
         <form id="end-call" class="pure-form">
             <p>Currently in call with <span id="their-id">...</span></p>
-            <button href="#" class="pure-button pure-button-success" type="button">End Call</button
+            <button href="#" class="qten-button" type="button">End Call</button>
         </form>
+        <h3>ペイント機能</h3>
+        <input type="button" id="save" value="保存" class="qten-button"/>
+        <input type="button" id="clear" value="消去" class="qten-button"/>
     </div>
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -55,5 +54,3 @@
 <script type="text/javascript" src="script.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 </html>
-
-
