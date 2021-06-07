@@ -3,7 +3,7 @@
 let localStream = null;
 let peer = null;
 let existingCall = null;
-let cameraFacing = false;
+let cameraFacing = true;
 
 // マイビデオ取得
 navigator.mediaDevices.getUserMedia({video: true, audio: true})
@@ -81,24 +81,21 @@ $('#chg-screen').click(function(e){
     cameraFacing ?  vi.classList.remove("active") : vi.classList.add("active");
 
     // Android Chromeでは、セッションを一時停止しないとエラーが出ることがある
-     stopStreamedVideo(vi);
+    // stopStreamedVideo(vi);
 
     // カメラ切り替え
      navigator.mediaDevices.getUserMedia({ video: { facingMode: mode } })
             .then(function(stream){
                 // Success
                 localStream = stream;
+                //$('#my-video').get(0).srcObject = stream;
 
                 // キャンパス情報追加
                 var canvasVideo = document.getElementById("synthetic-canvas1");
                 var paintStream = canvasVideo.captureStream(30);
                 localStream.addTrack(paintStream.getVideoTracks()[0]);
 
-                if(existingCall != null){
-                    existingCall.replaceStream(localStream)
-                }else{
-                    $('#my-video').get(0).srcObject = stream;
-                }
+                existingCall.replaceStream(localStream)
             })
             .catch(err => alert(`${err.name} ${err.message}`)); 
     cameraFacing = !cameraFacing;
@@ -136,10 +133,6 @@ function setupCallEventHandlers(call){
     existingCall = call;
 
     call.on('stream', function(stream){
-
-        for(let i = 0; i < stream.getVideoTracks().length; i++){
-            console.log(i + ":" + stream.getVideoTracks()[i].id);
-        }
 
         addVideo(stream);
         setupEndCallUI();
