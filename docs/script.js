@@ -92,7 +92,7 @@ $('#chg-screen').click(function(e){
     const mode = cameraFacing ? "environment" : "user";
 
     // フロントカメラをそのまま使うと、左右反転してしまうので、activeクラスとcssでミラー処理
-    cameraFacing ?  vi.classList.remove("active") : vi.classList.add("active");
+    // cameraFacing ?  vi.classList.remove("active") : vi.classList.add("active");
 
     // Android Chromeでは、セッションを一時停止しないとエラーが出ることがある
     // stopStreamedVideo(vi);
