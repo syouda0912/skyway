@@ -55,6 +55,13 @@ peer.on('close', function(){
     for(let i = 0; i < paintgroup.length; i++){
          paintgroup[i].style.display = "none";
     }
+
+    // カメラ切替を非表示にする。
+    var chgScreengroup = document.getElementsByClassName('screen-wrapper');
+    for(let i = 0; i < chgScreengroup.length; i++){
+        chgScreengroup[i].style.display = "none";
+   }
+
 });
 
 peer.on('disconnected', function(){
@@ -65,6 +72,13 @@ $('#make-call').submit(function(e){
 
     const call = peer.call($('#callto-id').val(), localStream);
     setupCallEventHandlers(call);
+
+    // カメラ切替を表示にする。
+    var chgScreengroup = document.getElementsByClassName('screen-wrapper');
+    for(let i = 0; i < chgScreengroup.length; i++){
+        chgScreengroup[i].style.display = "block";
+   }
+
 });
 
 $('#end-call').click(function(){
@@ -74,7 +88,7 @@ $('#end-call').click(function(){
 $('#chg-screen').click(function(e){
     e.preventDefault();
 
-    var vi = document.getElementById('my-video');
+    // var vi = document.getElementById('my-video');
     const mode = cameraFacing ? "environment" : "user";
 
     // フロントカメラをそのまま使うと、左右反転してしまうので、activeクラスとcssでミラー処理
@@ -84,7 +98,7 @@ $('#chg-screen').click(function(e){
     // stopStreamedVideo(vi);
 
     // カメラ切り替え
-     navigator.mediaDevices.getUserMedia({ video: { facingMode: mode } })
+     navigator.mediaDevices.getUserMedia({audio: true, video: { facingMode: mode } })
             .then(function(stream){
                 // Success
                 localStream = stream;
@@ -95,23 +109,25 @@ $('#chg-screen').click(function(e){
                 var paintStream = canvasVideo.captureStream(30);
                 localStream.addTrack(paintStream.getVideoTracks()[0]);
 
-                existingCall.replaceStream(localStream)
+                if(existingCall){
+                    existingCall.replaceStream(localStream)
+                }
             })
             .catch(err => alert(`${err.name} ${err.message}`)); 
     cameraFacing = !cameraFacing;
-})
+});
 
 // videoセッション一時停止
-function stopStreamedVideo(videoElem) {
-    let stream = videoElem.srcObject;
-    let tracks = stream.getTracks();
+// function stopStreamedVideo(videoElem) {
+//     let stream = videoElem.srcObject;
+//     let tracks = stream.getTracks();
 
-    tracks.forEach(function(track) {
-        track.stop();
-    });
+//     tracks.forEach(function(track) {
+//         track.stop();
+//     });
 
-    videoElem.srcObject = null;
-}
+//     videoElem.srcObject = null;
+// }
 
 peer.on('call', function(call){
 
@@ -156,8 +172,8 @@ function addVideo(stream){
         $('#my-video').get(0).srcObject = _peerPaint;
         $('#their-video').get(0).srcObject = _peerVideo;
 
-        $('#my-audio').get(0).srcObject = _peerVideo;
-        $('#their-audio').get(0).srcObject = _peerVideo;
+//        $('#my-audio').get(0).srcObject = stream;
+        $('#their-audio').get(0).srcObject = stream;
 
     }else{
         $('#their-video').get(0).srcObject = stream;
@@ -172,6 +188,12 @@ function setupMakeCallUI(){
     for(let i = 0; i < paintgroup.length; i++){
          paintgroup[i].style.display = "none";
     }
+
+    // カメラ切替を非表示にする。
+    var chgScreengroup = document.getElementsByClassName('screen-wrapper');
+    for(let i = 0; i < chgScreengroup.length; i++){
+        chgScreengroup[i].style.display = "none";
+   }
 
     // 描画情報削除
     var canvasVideo = document.getElementById("synthetic-canvas1");
@@ -207,6 +229,12 @@ $(function() {
     for(let i = 0; i < paintgroup.length; i++){
          paintgroup[i].style.display = "none";
     }
+
+    // カメラ切替を非表示にする。
+    var chgScreengroup = document.getElementsByClassName('screen-wrapper');
+    for(let i = 0; i < chgScreengroup.length; i++){
+        chgScreengroup[i].style.display = "none";
+   }
 
     //描画処理
     draw();
