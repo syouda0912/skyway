@@ -55,6 +55,13 @@ peer.on('close', function(){
     for(let i = 0; i < paintgroup.length; i++){
          paintgroup[i].style.display = "none";
     }
+
+    // カメラ切替を非表示にする。
+    var chgScreengroup = document.getElementsByClassName('screen-wrapper');
+    for(let i = 0; i < chgScreengroup.length; i++){
+        chgScreengroup[i].style.display = "none";
+   }
+
 });
 
 peer.on('disconnected', function(){
@@ -65,6 +72,13 @@ $('#make-call').submit(function(e){
 
     const call = peer.call($('#callto-id').val(), localStream);
     setupCallEventHandlers(call);
+
+    // カメラ切替を表示にする。
+    var chgScreengroup = document.getElementsByClassName('screen-wrapper');
+    for(let i = 0; i < chgScreengroup.length; i++){
+        chgScreengroup[i].style.display = "block";
+   }
+
 });
 
 $('#end-call').click(function(){
@@ -104,16 +118,16 @@ $('#chg-screen').click(function(e){
 });
 
 // videoセッション一時停止
-function stopStreamedVideo(videoElem) {
-    let stream = videoElem.srcObject;
-    let tracks = stream.getTracks();
+// function stopStreamedVideo(videoElem) {
+//     let stream = videoElem.srcObject;
+//     let tracks = stream.getTracks();
 
-    tracks.forEach(function(track) {
-        track.stop();
-    });
+//     tracks.forEach(function(track) {
+//         track.stop();
+//     });
 
-    videoElem.srcObject = null;
-}
+//     videoElem.srcObject = null;
+// }
 
 peer.on('call', function(call){
 
@@ -210,6 +224,12 @@ $(function() {
     for(let i = 0; i < paintgroup.length; i++){
          paintgroup[i].style.display = "none";
     }
+
+    // カメラ切替を非表示にする。
+    var chgScreengroup = document.getElementsByClassName('screen-wrapper');
+    for(let i = 0; i < chgScreengroup.length; i++){
+        chgScreengroup[i].style.display = "none";
+   }
 
     //描画処理
     draw();
