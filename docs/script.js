@@ -190,6 +190,12 @@ function setupMakeCallUI(){
          paintgroup[i].style.display = "none";
     }
 
+    // カメラ切替を非表示にする。
+    var chgScreengroup = document.getElementsByClassName('screen-wrapper');
+    for(let i = 0; i < chgScreengroup.length; i++){
+        chgScreengroup[i].style.display = "none";
+   }
+
     // 描画情報削除
     var canvasVideo = document.getElementById("synthetic-canvas1");
     var canvasPaint = document.getElementById("synthetic-canvas2");
