@@ -5,6 +5,7 @@ let peer = null;
 let existingCall = null;
 let cameraFacing = false;
 
+// マイビデオ取得
 navigator.mediaDevices.getUserMedia({video: true, audio: true})
     .then(function (stream) {
         // Success
@@ -77,15 +78,22 @@ $('#chg-screen').click(function(e){
     const mode = cameraFacing ? "environment" : "user";
 
     // フロントカメラをそのまま使うと、左右反転してしまうので、activeクラスとcssでミラー処理
-    //cameraFacing ?  vi.classList.remove("active") : vi.classList.add("active");
+    cameraFacing ?  vi.classList.remove("active") : vi.classList.add("active");
 
     // Android Chromeでは、セッションを一時停止しないとエラーが出ることがある
-    // stopStreamedVideo(vi);
+     stopStreamedVideo(vi);
 
     // カメラ切り替え
      navigator.mediaDevices.getUserMedia({ video: { facingMode: mode } })
             .then(function(stream){
-                localStream.getVideoTracks()[0] = stream
+                // Success
+                $('#my-video').get(0).srcObject = stream;
+                localStream = stream;
+
+                // キャンパス情報追加
+                var canvasVideo = document.getElementById("synthetic-canvas1");
+                var paintStream = canvasVideo.captureStream(30);
+                localStream.addTrack(paintStream.getVideoTracks()[0]);
             })
             .catch(err => alert(`${err.name} ${err.message}`)); 
     cameraFacing = !cameraFacing;
@@ -187,15 +195,11 @@ $(function() {
     var startX;
     var startY;
     var flag = false;
-    var video = document.getElementById("their-video");
+    var theirVideo = document.getElementById("their-video");
     var canvasVideo = document.getElementById("synthetic-canvas1");
     var canvasPaint = document.getElementById("synthetic-canvas2");
 
-    // Canvasのサイズを揃える
-//    canvasVideo.width = canvasVideo.width * 2
-//    canvasVideo.height = canvasVideo.height * 2
-//    canvasPaint.width = canvasVideo.width;
-//    canvasPaint.height = canvasVideo.height;
+    // Canvasのサイズを設定する
     setResolution(canvasVideo);
     setResolution(canvasPaint);
 
@@ -275,19 +279,14 @@ $(function() {
     function setResolution(c) {
         c.width = 720;
         c.height = 480;
-
     }
 
     function draw(){
         // ビデオの内容をクリア
-        //displayContext.clearRect(0, 0, displayCanvas.width, displayCanvas.height);
         contextVideo.clearRect(0, 0, canvasVideo.width, canvasVideo.height);
 
         //video2の加工
-        contextVideo.drawImage(video, 0, 0, canvasVideo.width, canvasVideo.height);
-
-        //描画の加工
-        //displayContext.drawImage(displayCanvas, 0, 0, displayCanvas.width, displayCanvas.height);
+        contextVideo.drawImage(theirVideo, 0, 0, canvasVideo.width, canvasVideo.height);
 
         //重ね合わせ
         contextVideo.drawImage(canvasPaint,0,0)
