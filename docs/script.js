@@ -87,7 +87,6 @@ $('#chg-screen').click(function(e){
      navigator.mediaDevices.getUserMedia({ video: { facingMode: mode } })
             .then(function(stream){
                 // Success
-                $('#my-video').get(0).srcObject = stream;
                 localStream = stream;
 
                 // キャンパス情報追加
@@ -97,6 +96,8 @@ $('#chg-screen').click(function(e){
 
                 if(existingCall != null){
                     existingCall.replaceStream(localStream)
+                }else{
+                    $('#my-video').get(0).srcObject = stream;
                 }
             })
             .catch(err => alert(`${err.name} ${err.message}`)); 
