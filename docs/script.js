@@ -157,8 +157,6 @@ function addVideo(stream){
         $('#my-video').get(0).srcObject = _peerPaint;
         $('#their-video').get(0).srcObject = _peerVideo;
 
-        var at = stream.getAudioTracks().length
-
 //        $('#my-audio').get(0).srcObject = stream;
         $('#their-audio').get(0).srcObject = stream;
 
@@ -294,4 +292,3 @@ $(function() {
         requestAnimationFrame(draw);
     };
 });
-
