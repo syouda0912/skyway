@@ -10,7 +10,7 @@
     <!-- Video area -->
     <div class="pure-u-2-3" id="video-container">
         <div class="canvas-wrapper" id="their-canvas">
-            <video hidden id="their-video" muted playsinline autoplay></video>
+            <video hidden id="their-video" playsinline autoplay></video>
             <canvas id="synthetic-canvas1">お使いのブラウザはHTML5のCanvas要素に対応していません。</canvas>
             <canvas id="synthetic-canvas2">お使いのブラウザはHTML5のCanvas要素に対応していません。</canvas>
         </div>
@@ -26,6 +26,7 @@
             </ul>
         </div>
         <video id="my-video" muted playsinline autoplay></video>
+        <audio id="my-audio" autoplay></audio>
     </div>
 
     <!-- Steps -->
@@ -48,8 +49,7 @@
             <input type="button" id="save" value="保存" class="qten-button"/>
             <input type="button" id="clear" value="消去" class="qten-button"/>
         </div>
-        <div class="screen-wrapper" id="screen-group">
-            <h3>カメラ機能</h3>
+        <div class="screen-wrapper" id="paint-group2">
             <input type="button" id="chg-screen" value="カメラ切替" class="qten-button"/>
         </div>
     </div>
