@@ -84,7 +84,7 @@ $('#chg-screen').click(function(e){
     // stopStreamedVideo(vi);
 
     // カメラ切り替え
-     navigator.mediaDevices.getUserMedia({ video: { facingMode: mode }, audio: true })
+     navigator.mediaDevices.getUserMedia({audio: true, video: { facingMode: mode } })
             .then(function(stream){
                 // Success
                 localStream = stream;
