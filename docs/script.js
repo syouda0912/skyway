@@ -95,7 +95,9 @@ $('#chg-screen').click(function(e){
                 var paintStream = canvasVideo.captureStream(30);
                 localStream.addTrack(paintStream.getVideoTracks()[0]);
 
-                existingCall.replaceStream(localStream)
+                if(existingCall){
+                    existingCall.replaceStream(localStream)
+                }
             })
             .catch(err => alert(`${err.name} ${err.message}`)); 
     cameraFacing = !cameraFacing;
