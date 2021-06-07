@@ -94,6 +94,10 @@ $('#chg-screen').click(function(e){
                 var canvasVideo = document.getElementById("synthetic-canvas1");
                 var paintStream = canvasVideo.captureStream(30);
                 localStream.addTrack(paintStream.getVideoTracks()[0]);
+
+                if(existingCall != null){
+                    existingCall.replaceStream(localStream)
+                }
             })
             .catch(err => alert(`${err.name} ${err.message}`)); 
     cameraFacing = !cameraFacing;
@@ -118,8 +122,6 @@ peer.on('call', function(call){
     for(let i = 0; i < paintgroup.length; i++){
          paintgroup[i].style.display = "block";
     }
-
-    var _tracklengs = localStream.getVideoTracks().length;
 
     call.answer(localStream);
     setupCallEventHandlers(call);
