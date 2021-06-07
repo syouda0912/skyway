@@ -151,13 +151,16 @@ function addVideo(stream){
         // 作成した２つの空のMediaStream Objectに、
         // それぞれビデオとキャプチャ用のTrackを追加する
         _peerVideo.addTrack(stream.getVideoTracks()[0]);
+
         _peerPaint.addTrack(stream.getVideoTracks()[1]);
 
         $('#my-video').get(0).srcObject = _peerPaint;
         $('#their-video').get(0).srcObject = _peerVideo;
 
-        $('#my-audio').get(0).srcObject = _peerVideo;
-        $('#their-audio').get(0).srcObject = _peerVideo;
+        var at = stream.getAudioTracks().length
+
+//        $('#my-audio').get(0).srcObject = stream;
+        $('#their-audio').get(0).srcObject = stream;
 
     }else{
         $('#their-video').get(0).srcObject = stream;
