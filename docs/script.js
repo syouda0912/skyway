@@ -84,7 +84,7 @@ $('#chg-screen').click(function(e){
     // stopStreamedVideo(vi);
 
     // カメラ切り替え
-     navigator.mediaDevices.getUserMedia({ video: { facingMode: mode } })
+     navigator.mediaDevices.getUserMedia({ video: { facingMode: mode }, audio: true })
             .then(function(stream){
                 // Success
                 localStream = stream;
@@ -99,7 +99,7 @@ $('#chg-screen').click(function(e){
             })
             .catch(err => alert(`${err.name} ${err.message}`)); 
     cameraFacing = !cameraFacing;
-})
+});
 
 // videoセッション一時停止
 function stopStreamedVideo(videoElem) {
@@ -292,3 +292,4 @@ $(function() {
         requestAnimationFrame(draw);
     };
 });
+
