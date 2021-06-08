@@ -292,9 +292,18 @@ $(function() {
     });
  
     $('#save').click(function() {
-        var d = canvasVideo.toDataURL('image/png');
-        d = d.replace('image/png', 'image/octet-stream');
-        window.open(d, 'save');
+        var uri = canvasVideo.toDataURL('image/jpeg', 0.85);
+        if (canvasVideo.msToBlob) { //IE対応
+            var blob = toBlob(uri);
+            window.navigator.msSaveBlob(blob, 'demo.jpg');
+        } else {
+            //アンカータグを作成
+            var a = document.createElement('a');
+            a.href = uri;
+            a.download = 'demo.jpg';
+            //クリックイベントを発生させる
+            a.click();
+        }
     });
 
     function setResolution(c) {
